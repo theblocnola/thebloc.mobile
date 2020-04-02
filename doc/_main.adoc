@@ -1,5 +1,5 @@
-The Article Title
-=================
+The Bloc Mobile App
+===================
 Nolan Sherman <nolanrsherman@gmail.com>
 v0.0, 2020-4
 
@@ -58,13 +58,14 @@ embedding the features in the app a posibility too.
 === Links to Social media 
 Links are easy to create on any platform. 
 
-=== Podcasts
+=== Podcasts & Music
 For an in app experience we can use the android and ios SDK spotify provides.
 https://developer.spotify.com/documentation/android/
 
-=== music
-For an in app experience we can use the android and ios SDK spotify provides.
-https://developer.spotify.com/documentation/android/
+===== Resources: 
+
+1. *Multiplatofrm App Template written for flutter*. Already accesses spotify. Uses tabbed navigation. This
+is a potential great starting point. https://flutterawesome.com/a-multiplatform-app-written-entirely-in-dart-flutter/[See Here]
 
 === Livestream
 Youtube Sdks exist, and since we may want to show other youtube content I think it makes sense
