@@ -1,0 +1,107 @@
+The Article Title
+=================
+Nolan Sherman <nolanrsherman@gmail.com>
+v0.0, 2020-4
+
+
+The BLOC App serves to provide users with access to all of the BLOC's media resources.
+Scope and requirments of this project are still being decided. As of now, the MVP
+goal is to provide links to all the various platforms. We believe that actually displaying
+content from the other platforms would be a better user experience however.
+
+== Platforms
+The main target of this application is mobile device. So for now the scope is
+just to target Android and iOS platforms. 
+
+=== Stack
+We have yet to decide on which framework / environement we will use to write this app. 
+Possible considerations are:
+
+- Native (ios/android)
+    * Pros:
+        1. SDKs exist for many of the features we want in the native
+    * Cons:
+        1. Two code bases.
+- Flutter (A cross platform native app framework from google)
+    * Pros:
+        1. One code base. Faster development time, especially for those features that
+        can be shared between platforms. (All in our case I believe)
+    * Cons:
+        1. There may not be plugins that support the sdks we are intersted in. We could
+        create our own to just wrap the features we need however.
+- Cordova / Ionic (Package web applications in a App)
+    * Pros:
+        1. Easy to get started. 
+        2. Styling the app and Linking to platforms would be very easy. 
+        2. Javscript and web programming is a very common skill
+        3. Nolan has experience developing and deploying these to market
+    * Cons:
+        1. Embeding features in the app could be difficult.
+        2. The plugin ecosystem that enables hooks to the native features is not great
+        3. I think we will find embeding features like media play back to be difficult, possibly buggy. 
+
+== Features
+- Links to Social media - Instagram, Facebook
+- Podcasts - from Spotify
+- music - from Spotify
+- Livestream - livestream app or youtube
+- Instagram - possibly Bloc page feed within the app
+- Devotionals - From the Bible App
+- Sermon Notes - From the Bible App
+- Sermon vidoes - Youtube gallery
+
+
+As suggested in the opening paraphraph, simply linking to any media or service sources 
+can be though of as an MVP. However, some section below may reference SDKs that will make
+embedding the features in the app a posibility too.
+
+=== Links to Social media 
+Links are easy to create on any platform. 
+
+=== Podcasts
+For an in app experience we can use the android and ios SDK spotify provides.
+https://developer.spotify.com/documentation/android/
+
+=== music
+For an in app experience we can use the android and ios SDK spotify provides.
+https://developer.spotify.com/documentation/android/
+
+=== Livestream
+Youtube Sdks exist, and since we may want to show other youtube content I think it makes sense
+to rely on just that platform rather then add another.
+
+Being a google product, native support exists for sure. Here is the iOS API just to be certain.
+ https://developers.google.com/youtube/v3/guides/ios_youtube_helper
+
+If we go with flutter, one benefit would be this cross platform plugin that supports live streams.
+https://github.com/sarbagyastha/youtube_player_flutter=
+
+
+=== Sermon vidoes
+Youtube Sdks exist, and since we may want to show other youtube content I think it makes sense
+to rely on just that platform rather then add another. 
+
+Being a google product, native support exists for sure. Here is the iOS API just to be certain.
+ https://developers.google.com/youtube/v3/guides/ios_youtube_helper
+
+If we go with flutter, one benefit would be this cross platform plugin that supports youtube video playback.
+https://github.com/sarbagyastha/youtube_player_flutter=
+
+=== Instagram 
+I did not find a instagram owned client sdk. They however have a well documented API and we could use the
+embed API. https://developers.facebook.com/docs/instagram/embedding.
+
+Additionally, there are non instagram owned libraries that could do this for us I am certain. I saw one for 
+flutter but did not fully investigate.
+
+=== Devotionals
+We talked about using the Bible App api to get the devotionals. The API is somewhat limited however
+and I dont think this is currently possible. Unless a devotional is the same thing as a "verse of the day".
+
+https://yv-public-api-docs.netlify.com/api/index.html
+
+=== Sermon Notes
+We talked about using the Bible App api to get the sermon notes. The API is somewhat limited however
+and I dont think this is currently possible.
+
+https://yv-public-api-docs.netlify.com/api/index.html
