@@ -1,0 +1,3 @@
+= The BLOC - Flutter Implementation
+
+This branch contains a flutter implementation of The BLOC mobile App. Read more about flutter at https://flutter.dev/docs/get-started.
