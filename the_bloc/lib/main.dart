@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'The BLOC',
-      theme: ThemeData(
+      theme: ThemeData.dark(
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -18,9 +18,45 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+
       ),
-      home: MyHomePage(title: 'Welcome to The BLOC'),
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Welcome to the BLOC'),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_car), 
+                  title: Text('Podcast')
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_car), 
+                  title: Text('Sermons')
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_car), 
+                  title: Text('Worship')
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_car), 
+                  title: Text('More')
+                )
+              ],
+          ),
+          body: TabBarView(
+            children: [
+              MyHomePage(title: 'Tab 1'),
+              MyHomePage(title: 'Tab 2'),
+              MyHomePage(title: 'Tab 3'),
+              MyHomePage(title: 'Tab 4'),
+            ],
+          ),
+        ),
+      ), 
     );
   }
 }
