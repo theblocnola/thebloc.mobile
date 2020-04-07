@@ -41,4 +41,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation files('C:\\src\\flutter\\bin\\cache\\artifacts\\engine\\android-x64\\flutter.jar')
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation project(path: ':spotify-app-remote-release-0.7.0')
+    implementation project(path: ':spotify-auth-release-1.2.3')
+
 }
