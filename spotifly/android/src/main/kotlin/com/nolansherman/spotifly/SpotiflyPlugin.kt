@@ -1,7 +1,5 @@
 package com.nolansherman.spotifly
 
-import android.app.Activity
-import android.content.Intent
 import androidx.annotation.NonNull
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
@@ -18,7 +16,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
 
@@ -44,7 +41,6 @@ public class SpotiflyPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     this.activityBinding = binding; //store the activity binding
-    activityBinding.addActivityResultListener(SpotiflyActivityResultListener());
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
@@ -90,14 +86,15 @@ public class SpotiflyPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   fun authorize(@NonNull call: MethodCall, @NonNull result: Result){
     val builder: AuthorizationRequest.Builder = AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI)
 
-    builder.setScopes(arrayOf("streaming"))
+    builder.setScopes(arrayOf("streaming", "app-remote-control", "user-follow-modify"))
     val request: AuthorizationRequest = builder.build()
     AuthorizationClient.openLoginActivity(this.activityBinding.activity, REQUEST_CODE, request)
-    this.activityBinding.addActivityResultListener( object: PluginRegistry.ActivityResultListener {
-      override fun onActivityResult(requestCode: Int, resultCode: Int, intent:Intent?): Boolean {
-        TODO("Not yet implemented")
-      }
-    });
+
+    val listener = SpotiflyActivityResultListener()
+    this.activityBinding.addActivityResultListener(listener)
+    listener.OnComplete =  { //remove the listener when the result returns
+      this.activityBinding.removeActivityResultListener(listener);
+    }
 
   }
 
@@ -107,7 +104,7 @@ public class SpotiflyPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
             .showAuthView(true)
             .build()
 
-    SpotifyAppRemote.connect(this.activity, connectionParams,
+    SpotifyAppRemote.connect(this.activityBinding.activity, connectionParams,
             object : Connector.ConnectionListener {
               override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
                 var mSpotifyAppRemote = spotifyAppRemote
