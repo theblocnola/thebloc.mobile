@@ -1,6 +1,7 @@
 package com.nolansherman.spotifly
 
 import android.app.Activity
+import android.content.Intent
 import androidx.annotation.NonNull
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
@@ -17,17 +18,20 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
 
 /** SpotiflyPlugin */
 public class SpotiflyPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
-  private var activity: Activity? = null
+  private lateinit var activityBinding: ActivityPluginBinding;
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     val channel = MethodChannel(flutterPluginBinding.getFlutterEngine().dartExecutor, "spotifly")
     channel.setMethodCallHandler(SpotiflyPlugin());
+
+
   }
 
   override fun onDetachedFromActivity() {
@@ -39,7 +43,8 @@ public class SpotiflyPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-    this.activity = binding.activity;
+    this.activityBinding = binding; //store the activity binding
+    activityBinding.addActivityResultListener(SpotiflyActivityResultListener());
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
@@ -87,8 +92,13 @@ public class SpotiflyPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
     builder.setScopes(arrayOf("streaming"))
     val request: AuthorizationRequest = builder.build()
+    AuthorizationClient.openLoginActivity(this.activityBinding.activity, REQUEST_CODE, request)
+    this.activityBinding.addActivityResultListener( object: PluginRegistry.ActivityResultListener {
+      override fun onActivityResult(requestCode: Int, resultCode: Int, intent:Intent?): Boolean {
+        TODO("Not yet implemented")
+      }
+    });
 
-    AuthorizationClient.openLoginActivity(this.activity, REQUEST_CODE, request)
   }
 
   fun authorizeAppRemote(@NonNull call: MethodCall, @NonNull result: Result){
